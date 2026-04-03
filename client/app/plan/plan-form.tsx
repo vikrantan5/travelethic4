@@ -521,15 +521,15 @@ export default function PlanForm() {
   };
 
   return (
-    <div className="min-h-screen bg-background py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br bg-gradient-to-br from-black to-blue-100   py-8 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 flex items-center justify-center gap-2 sm:gap-3">
-            <Luggage className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
+          <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-4 flex items-center justify-center gap-2 sm:gap-3">
+            <Luggage className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600" />
             Plan Your Perfect Trip
           </h1>
-          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Tell us about your dream destination and we&apos;ll craft the
             perfect itinerary just for you
           </p>
@@ -575,9 +575,9 @@ export default function PlanForm() {
         )}
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <Card className="shadow-lg border">
-              <CardHeader className="pb-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 ">
+               <Card className="shadow-lg border border-purple-200/50 dark:border-purple-800/50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm bg-gradient-to-br from-black/80 to-gray-400 text-white">
+              <CardHeader className="pb-4 ">
                 <CardTitle className="flex items-center gap-3 text-2xl">
                   {React.createElement(steps[currentStep].icon, {
                     className: "w-6 h-6 text-primary",
@@ -589,7 +589,7 @@ export default function PlanForm() {
                 </CardDescription>
               </CardHeader>
 
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-6 ">
                 {/* Step 0: Trip Basics */}
                 {currentStep === 0 && (
                   <div className="space-y-6">
@@ -677,17 +677,17 @@ export default function PlanForm() {
                     {/* Travel Dates Section */}
                     <div className="space-y-4">
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                        <FormLabel className="text-base font-semibold flex items-center gap-2">
+                        <FormLabel className=" text-base font-semibold flex items-center gap-2">
                           <CalendarIcon className="w-4 h-4 text-primary" />
                           When are you traveling?
                         </FormLabel>
-                        <div className="inline-flex items-center bg-muted rounded-lg p-1 w-fit">
+                        <div className="bg-slate-900 inline-flex items-center bg-muted rounded-lg p-1 w-fit">
                           <button
                             type="button"
                             className={`inline-flex items-center px-3 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${
                               dateInputType === "picker"
-                                ? "bg-background text-primary shadow-sm border border-border"
-                                : "text-muted-foreground hover:text-foreground"
+                                ? "bg-slate-300 bg-background text-primary shadow-sm border border-border"
+                                : " text-muted-foreground hover:text-foreground"
                             }`}
                             onClick={() => {
                               setDateInputType("picker");
@@ -698,14 +698,14 @@ export default function PlanForm() {
                               }
                             }}
                           >
-                            <CalendarIcon className="w-3 h-3 mr-1.5" />
+                            <CalendarIcon className=" w-3 h-3 mr-1.5" />
                             Date Picker
                           </button>
                           <button
                             type="button"
                             className={`inline-flex items-center px-3 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${
                               dateInputType === "text"
-                                ? "bg-background text-primary shadow-sm border border-border"
+                                ? "bg-slate-300 bg-background text-primary shadow-sm border border-border"
                                 : "text-muted-foreground hover:text-foreground"
                             }`}
                             onClick={() => {
@@ -733,18 +733,18 @@ export default function PlanForm() {
                                 <FormLabel className="text-sm font-medium">
                                   Start Date
                                 </FormLabel>
-                                <FormControl>
+                                <FormControl >
                                   <Popover>
                                     <PopoverTrigger asChild>
                                       <Button
                                         variant={"outline"}
                                         className={cn(
-                                          "w-full justify-start text-left font-normal h-12",
+                                          "bg-slate-300 text-black w-full justify-start text-left font-normal  h-12",
                                           !field.value &&
                                             "text-muted-foreground"
                                         )}
                                       >
-                                        <CalendarIcon className="mr-2 h-4 w-4" />
+                                        <CalendarIcon className=" mr-2 h-4 w-4" />
                                         {field.value ? (
                                           format(new Date(field.value), "PPP")
                                         ) : (
@@ -793,7 +793,7 @@ export default function PlanForm() {
                                       <Button
                                         variant={"outline"}
                                         className={cn(
-                                          "w-full justify-start text-left font-normal h-12",
+                                          "bg-slate-300 text-black w-full justify-start text-left font-normal h-12",
                                           !field.value &&
                                             "text-muted-foreground"
                                         )}
@@ -984,7 +984,7 @@ export default function PlanForm() {
                               Number of children
                             </FormLabel>
                             <FormControl>
-                              <NumberInput
+                              <NumberInput  
                                 value={field.value}
                                 onChange={field.onChange}
                                 min={1}

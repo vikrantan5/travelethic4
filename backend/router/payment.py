@@ -18,7 +18,9 @@ from repository.payment_repository import (
     get_user_planner_status,
     update_user_premium_status,
     increment_planner_count,
-     get_user_payment_history,
+    get_user_payment_history,
+    create_payment_transaction,
+    update_payment_transaction,
 )
 from middleware.auth_middleware import get_current_user
 
@@ -118,6 +120,15 @@ async def initiate_payment(
         order = razorpay_client.order.create(data=order_data)
         logger.info(f"Razorpay order created: {order['id']}")
 
+             # Save transaction to database
+        await create_payment_transaction(
+            user_id=request.user_id,
+            razorpay_order_id=order["id"],
+            amount=order["amount"],
+            currency=order["currency"],
+            plan_type=request.plan_type
+        )
+
         return PaymentInitiateResponse(
             order_id=order["id"],
             amount=order["amount"],
@@ -163,10 +174,25 @@ async def verify_payment(
 
         if generated_signature != request.razorpay_signature:
             logger.error("Payment signature verification failed")
+            # Update transaction status to failed
+            await update_payment_transaction(
+                razorpay_order_id=request.razorpay_order_id,
+                razorpay_payment_id=request.razorpay_payment_id,
+                razorpay_signature=request.razorpay_signature,
+                status='failed'
+            )
             return PaymentVerificationResponse(
                 success=False,
                 message="Payment verification failed. Invalid signature.",
             )
+
+        # Update transaction status to success
+        await update_payment_transaction(
+            razorpay_order_id=request.razorpay_order_id,
+            razorpay_payment_id=request.razorpay_payment_id,
+            razorpay_signature=request.razorpay_signature,
+            status='success'
+        )
 
         # Upgrade user to premium
         await update_user_premium_status(request.user_id, is_premium=True)

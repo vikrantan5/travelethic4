@@ -124,6 +124,89 @@ async def increment_planner_count(user_id: str) -> None:
     logger.info(f"Incremented planner count for user {user_id}")
 
 
+async def create_payment_transaction(
+    user_id: str,
+    razorpay_order_id: str,
+    amount: int,
+    currency: str,
+    plan_type: str
+) -> int:
+    """
+    Create a new payment transaction record
+    
+    Args:
+        user_id: User ID
+        razorpay_order_id: Razorpay order ID
+        amount: Payment amount in paise
+        currency: Currency code
+        plan_type: Type of plan being purchased
+        
+    Returns:
+        Transaction ID
+    """
+    pool = get_db_pool()
+    
+    async with pool.acquire() as conn:
+        row = await conn.fetchrow(
+            """
+            INSERT INTO payment_transactions 
+            (user_id, razorpay_order_id, amount, currency, plan_type, status, created_at)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
+            RETURNING id
+            """,
+            user_id,
+            razorpay_order_id,
+            amount,
+            currency,
+            plan_type,
+            'pending',
+            datetime.now(timezone.utc),
+        )
+        
+        transaction_id = row["id"]
+        logger.info(f"Created payment transaction {transaction_id} for user {user_id}")
+        return transaction_id
+
+
+async def update_payment_transaction(
+    razorpay_order_id: str,
+    razorpay_payment_id: str,
+    razorpay_signature: str,
+    status: str
+) -> None:
+    """
+    Update payment transaction with payment details
+    
+    Args:
+        razorpay_order_id: Razorpay order ID
+        razorpay_payment_id: Razorpay payment ID
+        razorpay_signature: Razorpay signature
+        status: Payment status (success/failed)
+    """
+    pool = get_db_pool()
+    
+    async with pool.acquire() as conn:
+        await conn.execute(
+            """
+            UPDATE payment_transactions
+            SET 
+                razorpay_payment_id = $2,
+                razorpay_signature = $3,
+                status = $4,
+                updated_at = $5
+            WHERE razorpay_order_id = $1
+            """,
+            razorpay_order_id,
+            razorpay_payment_id,
+            razorpay_signature,
+            status,
+            datetime.now(timezone.utc),
+        )
+    
+    logger.info(f"Updated payment transaction for order {razorpay_order_id} to status: {status}")
+
+
+
 
 
 async def get_user_payment_history(user_id: str) -> list:

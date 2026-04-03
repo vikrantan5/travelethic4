@@ -4,7 +4,7 @@ import asyncpg
 from typing import Any, AsyncGenerator, Dict, Optional
 from contextlib import asynccontextmanager
 
-from sqlalchemy import text
+# from sqlalchemy import text
 from sqlalchemy.ext.asyncio import (
     AsyncSession,
     create_async_engine,

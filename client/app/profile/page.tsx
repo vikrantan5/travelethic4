@@ -146,7 +146,7 @@ export default function ProfilePage() {
 
   if (isLoading || !user) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+       <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-gray-900 flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-primary" />
           <p className="text-muted-foreground">Loading profile...</p>
@@ -156,7 +156,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-background py-8 px-4 sm:px-6 lg:px-8">
+       <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-gray-900 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -166,13 +166,13 @@ export default function ProfilePage() {
               Back to Plans
             </Button>
           </Link>
-          <h1 className="text-3xl font-bold text-foreground">My Profile</h1>
-          <p className="text-muted-foreground mt-1">Manage your account and view subscription details</p>
+         <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">My Profile</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">Manage your account and view subscription details</p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
           {/* User Information Card */}
-          <Card className="md:col-span-2">
+            <Card className="md:col-span-2 border-purple-200/50 dark:border-purple-800/50 shadow-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <User className="w-5 h-5 text-primary" />
@@ -224,7 +224,7 @@ export default function ProfilePage() {
           </Card>
 
           {/* Stats Card */}
-          <Card>
+            <Card className="border-purple-200/50 dark:border-purple-800/50 shadow-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingUp className="w-5 h-5 text-primary" />
@@ -284,7 +284,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Subscription History */}
-        <Card className="mt-6">
+         <Card className="mt-6 border-purple-200/50 dark:border-purple-800/50 shadow-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <CreditCard className="w-5 h-5 text-primary" />

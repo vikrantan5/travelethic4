@@ -52,6 +52,7 @@ import { ImageGallery } from "@/components/image-gallery";
 import { generateTripPDF } from "@/lib/pdf-generator";
 import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { FormattedMarkdown } from "@/components/formatted-markdown";
 // Type Definitions
 interface PlaceImage {
   place: string;
@@ -1236,23 +1237,19 @@ export default function TripDetails() {
           {/* Guide Tab Content */}
           <TabsContent value="guide" className="space-y-8">
             {trip.destination_agent_response ? (
-              <Card className="overflow-hidden">
-                <CardHeader className="bg-muted/30">
-                  <CardTitle className="flex items-center">
-                    <Lightbulb className="h-5 w-5 mr-2 text-primary" />{" "}
+              <Card className="overflow-hidden border-purple-200/50 dark:border-purple-800/50 shadow-lg">
+                <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-950/30 dark:to-blue-950/30 border-b border-purple-100 dark:border-purple-900">
+                  <CardTitle className="flex items-center text-2xl">
+                    <Lightbulb className="h-6 w-6 mr-3 text-purple-600" />{" "}
                     Destination Guide
                   </CardTitle>
-                  <CardDescription>
-                    Tourist information and recommendations for{" "}
-                    {trip.destination}
+                  <CardDescription className="text-base">
+                    Comprehensive tourist information and recommendations for{" "}
+                    <span className="font-semibold text-purple-700 dark:text-purple-400">{trip.destination}</span>
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="pt-6">
-                  <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:font-bold prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg">
-                    <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
-                      {trip.destination_agent_response}
-                    </ReactMarkdown>
-                  </div>
+                <CardContent className="pt-8 px-6 pb-8">
+                  <FormattedMarkdown content={trip.destination_agent_response} type="destination" />
                 </CardContent>
               </Card>
             ) : (
@@ -1527,24 +1524,18 @@ export default function TripDetails() {
               <div className="space-y-8">
                 {/* Restaurant suggestions from agent */}
                 {trip.restaurant_agent_response && (
-                  <Card className="overflow-hidden">
-                    <CardHeader className="bg-muted/30">
-                      <CardTitle className="flex items-center">
-                        <Utensils className="h-5 w-5 mr-2 text-primary" />{" "}
+                  <Card className="overflow-hidden border-purple-200/50 dark:border-purple-800/50 shadow-lg">
+                    <CardHeader className="bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-950/30 dark:to-red-950/30 border-b border-orange-100 dark:border-orange-900">
+                      <CardTitle className="flex items-center text-2xl">
+                        <Utensils className="h-6 w-6 mr-3 text-orange-600" />{" "}
                         Restaurant Recommendations
                       </CardTitle>
-                      <CardDescription>
-                        Dining options for your trip
+                      <CardDescription className="text-base">
+                        Curated dining options for your culinary adventure
                       </CardDescription>
                     </CardHeader>
-                    <CardContent className="pt-6">
-                      <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:font-bold prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg">
-                        <ReactMarkdown
-                          remarkPlugins={[remarkGfm, remarkBreaks]}
-                        >
-                          {trip.restaurant_agent_response}
-                        </ReactMarkdown>
-                      </div>
+                    <CardContent className="pt-8 px-6 pb-8">
+                      <FormattedMarkdown content={trip.restaurant_agent_response} type="dining" />
                     </CardContent>
                   </Card>
                 )}
@@ -1621,22 +1612,18 @@ export default function TripDetails() {
           {/* Budget Tab Content */}
           <TabsContent value="budget" className="space-y-8">
             {trip.budget_agent_response ? (
-              <Card className="overflow-hidden">
-                <CardHeader className="bg-muted/30">
-                  <CardTitle className="flex items-center">
-                    <Receipt className="h-5 w-5 mr-2 text-primary" /> Budget
+              <Card className="overflow-hidden border-purple-200/50 dark:border-purple-800/50 shadow-lg">
+                <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950/30 dark:to-emerald-950/30 border-b border-green-100 dark:border-green-900">
+                  <CardTitle className="flex items-center text-2xl">
+                    <Receipt className="h-6 w-6 mr-3 text-green-600" /> Budget
                     Analysis
                   </CardTitle>
-                  <CardDescription>
-                    Budget recommendations and optimization strategies
+                  <CardDescription className="text-base">
+                    Budget recommendations and optimization strategies for your trip
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="pt-6">
-                  <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:font-bold prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg">
-                    <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
-                      {trip.budget_agent_response}
-                    </ReactMarkdown>
-                  </div>
+                <CardContent className="pt-8 px-6 pb-8">
+                  <FormattedMarkdown content={trip.budget_agent_response} type="budget" />
                 </CardContent>
               </Card>
             ) : (
