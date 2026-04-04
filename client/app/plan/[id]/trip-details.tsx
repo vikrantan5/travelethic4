@@ -242,45 +242,44 @@ function StatusBadge({ status }: { status: TripDetails["status"] }) {
     </Badge>
   );
 }
-
 function TripInfo({ trip }: { trip: TripDetails }) {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
-      <div className="flex items-center gap-2">
-        <CalendarDays className="h-4 w-4 text-primary" />
+      <div className="flex items-center gap-2 glass-card p-4 rounded-xl">
+        <CalendarDays className="h-4 w-4 text-purple-400" />
         <div>
-          <p className="font-semibold">
+          <p className="font-semibold text-white">
             {formatDate(trip.travelDatesStart, trip.dateInputType)}
           </p>
-          <p className="text-xs text-muted-foreground">Start Date</p>
+          <p className="text-xs text-gray-400">Start Date</p>
         </div>
       </div>
-      <div className="flex items-center gap-2">
-        <CalendarDays className="h-4 w-4 text-primary" />
+      <div className="flex items-center gap-2 glass-card p-4 rounded-xl">
+        <CalendarDays className="h-4 w-4 text-purple-400" />
         <div>
-          <p className="font-semibold">
+          <p className="font-semibold text-white">
             {formatDate(trip.travelDatesEnd, trip.dateInputType)}
           </p>
-          <p className="text-xs text-muted-foreground">End Date</p>
+          <p className="text-xs text-gray-400">End Date</p>
         </div>
       </div>
-      <div className="flex items-center gap-2">
-        <Users className="h-4 w-4 text-primary" />
+      <div className="flex items-center gap-2 glass-card p-4 rounded-xl">
+        <Users className="h-4 w-4 text-purple-400" />
         <div>
-          <p className="font-semibold">
+          <p className="font-semibold text-white">
             {trip.adults} Adult{trip.adults !== 1 ? "s" : ""}
             {trip.children ? `, ${trip.children} Child` : ""}
           </p>
-          <p className="text-xs text-muted-foreground">Travelers</p>
+          <p className="text-xs text-gray-400">Travelers</p>
         </div>
       </div>
-      <div className="flex items-center gap-2">
-        <DollarSign className="h-4 w-4 text-primary" />
+      <div className="flex items-center gap-2 glass-card p-4 rounded-xl">
+        <DollarSign className="h-4 w-4 text-purple-400" />
         <div>
-          <p className="font-semibold">
+          <p className="font-semibold text-white">
             {formatCurrency(trip.budget, trip.budgetCurrency)}
           </p>
-          <p className="text-xs text-muted-foreground">Budget</p>
+          <p className="text-xs text-gray-400">Budget</p>
         </div>
       </div>
     </div>
@@ -558,12 +557,14 @@ export default function TripDetails() {
   // Render loading state
   if (loading && !trip) {
     return (
-      <div className="container mx-auto p-4 flex flex-col items-center justify-center min-h-[calc(100vh-10rem)]">
-        <Loader2 size={48} className="animate-spin text-primary mb-4" />
-        <h1 className="text-2xl font-semibold mb-2">Loading Trip Details</h1>
-        <p className="text-muted-foreground text-center">
-          Fetching your trip plan...
-        </p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 flex items-center justify-center">
+        <div className="glass-card p-8 rounded-xl text-center border-purple-500/30">
+          <Loader2 size={48} className="animate-spin text-purple-400 mb-4 mx-auto" />
+          <h1 className="text-2xl font-semibold text-white mb-2">Loading Trip Details</h1>
+          <p className="text-gray-400 text-center">
+            Fetching your trip plan...
+          </p>
+        </div>
       </div>
     );
   }
@@ -571,103 +572,145 @@ export default function TripDetails() {
   // Render error state
   if (error || !trip) {
     return (
-      <div className="container mx-auto p-4 flex flex-col items-center justify-center min-h-[calc(100vh-10rem)]">
-        <Landmark size={64} className="text-muted-foreground mb-4" />
-        <h1 className="text-2xl font-semibold mb-2">Trip Not Found</h1>
-        <p className="text-muted-foreground text-center">
-          {error ||
-            "The trip you are looking for does not exist or could not be loaded."}
-        </p>
-        <Link href="/plans" className="mt-4 text-primary hover:underline">
-          Go to your trip plans
-        </Link>
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 flex items-center justify-center">
+        <div className="glass-card p-8 rounded-xl text-center border-purple-500/30">
+          <Landmark size={64} className="text-gray-400 mb-4 mx-auto" />
+          <h1 className="text-2xl font-semibold text-white mb-2">Trip Not Found</h1>
+          <p className="text-gray-400 text-center">
+            {error ||
+              "The trip you are looking for does not exist or could not be loaded."}
+          </p>
+          <Link href="/plans" className="mt-4 text-purple-400 hover:text-purple-300 hover:underline inline-block">
+            Go to your trip plans
+          </Link>
+        </div>
       </div>
     );
   }
-
   return (
-    <div className="container mx-auto p-4 sm:p-6 md:p-8 space-y-8">
-      <header className="flex flex-col space-y-2">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div className="flex-1">
-            {trip.destination && (
-              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight flex items-center">
-                <MapPin className="h-6 w-6 mr-2 text-primary" />
-                {trip.destination}
-              </h1>
-            )}
-            {trip.name && trip.name !== trip.destination && (
-              <p className="text-xl text-muted-foreground mt-1">{trip.name}</p>
-            )}
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          className="absolute top-20 left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute bottom-20 right-10 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.4, 1],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </div>
+
+      <div className="container mx-auto p-4 sm:p-6 md:p-8 space-y-8 relative z-10">
+        <header className="flex flex-col space-y-2">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex-1">
+              {trip.destination && (
+                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight flex items-center gradient-text">
+                  <MapPin className="h-6 w-6 mr-2 text-purple-400" />
+                  {trip.destination}
+                </h1>
+              )}
+              {trip.name && trip.name !== trip.destination && (
+                <p className="text-xl text-gray-300 mt-1">{trip.name}</p>
+              )}
+            </div>
+            <div className="flex items-center gap-2 flex-wrap">
+              {polling && (
+                <div className="flex items-center text-sm text-gray-400">
+                  <Loader2 className="h-3 w-3 animate-spin mr-1" />
+                  Updating...
+                </div>
+              )}
+              <StatusBadge status={trip.status} />
+                {trip.status === "completed" && (
+                <Button
+                  onClick={handleDownloadPDF}
+                  disabled={downloadingPDF}
+                  variant="outline"
+                  size="sm"
+                  className="flex items-center gap-2 glass-card border-purple-500/30 hover:bg-purple-500/10"
+                >
+                  {downloadingPDF ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Generating...
+                    </>
+                  ) : (
+                    <>
+                      <Download className="h-4 w-4" />
+                      Download PDF
+                    </>
+                  )}
+                </Button>
+              )}
+            </div>
           </div>
-          <div className="flex items-center gap-2 flex-wrap">
-            {polling && (
-              <div className="flex items-center text-sm text-muted-foreground">
-                <Loader2 className="h-3 w-3 animate-spin mr-1" />
-                Updating...
-              </div>
-            )}
-            <StatusBadge status={trip.status} />
-              {trip.status === "completed" && (
-              <Button
-                onClick={handleDownloadPDF}
-                disabled={downloadingPDF}
-                variant="outline"
-                size="sm"
-                className="flex items-center gap-2"
-              >
-                {downloadingPDF ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    Generating...
-                  </>
-                ) : (
-                  <>
-                    <Download className="h-4 w-4" />
-                    Download PDF
-                  </>
-                )}
-              </Button>
-            )}
-          </div>
-        </div>
-      </header>
+        </header>
 
       <Separator />
 
       {/* Trip Info Summary */}
       <TripInfo trip={trip} />
 
-      {/* Trip Input Details Section */}
-      <Accordion type="single" collapsible className="w-full border rounded-lg">
+       {/* Trip Input Details Section */}
+      <Accordion type="single" collapsible className="w-full glass-card border-purple-500/30 rounded-lg">
         <AccordionItem value="trip-details" className="border-b-0">
-          <AccordionTrigger className="text-lg font-semibold flex items-center p-4 hover:no-underline">
+          <AccordionTrigger className="text-lg font-semibold flex items-center p-4 hover:no-underline text-white">
             <div className="flex items-center">
-              <Globe className="mr-3 h-5 w-5 text-primary" />
+              <Globe className="mr-3 h-5 w-5 text-purple-400" />
               <span>View All Details</span>
             </div>
           </AccordionTrigger>
           <AccordionContent>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 border-t">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 border-t border-purple-500/20">
               {/* Destination and Location */}
-              <Card>
+              <Card className="glass-card border-purple-500/30">
                 <CardHeader className="pb-2">
-              <CardTitle className="text-lg flex items-center">
-                <MapPin className="h-4 w-4 mr-2 text-primary" />
+              <CardTitle className="text-lg flex items-center text-white">
+                <MapPin className="h-4 w-4 mr-2 text-purple-400" />
                 Destination
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
                 <div>
-                  <span className="font-medium">To:</span>{" "}
-                  <span className="text-muted-foreground">
+                  <span className="font-medium text-white">To:</span>{" "}
+                  <span className="text-gray-400">
                     {trip.destination}
                   </span>
                 </div>
                 <div>
-                  <span className="font-medium">From:</span>{" "}
-                  <span className="text-muted-foreground">
+                  <span className="font-medium text-white">From:</span>{" "}
+                  <span className="text-gray-400">
                     {trip.startingLocation}
                   </span>
                 </div>
@@ -676,33 +719,33 @@ export default function TripDetails() {
           </Card>
 
           {/* Dates and Duration */}
-          <Card>
+          <Card className="glass-card border-purple-500/30">
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg flex items-center">
-                <CalendarDays className="h-4 w-4 mr-2 text-primary" />
+              <CardTitle className="text-lg flex items-center text-white">
+                <CalendarDays className="h-4 w-4 mr-2 text-purple-400" />
                 Travel Dates
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
                 <div>
-                  <span className="font-medium">From:</span>{" "}
-                  <span className="text-muted-foreground">
+                  <span className="font-medium text-white">From:</span>{" "}
+                  <span className="text-gray-400">
                     {formatDate(trip.travelDatesStart, trip.dateInputType)}
                   </span>
                 </div>
                 {trip.travelDatesEnd && (
                   <div>
-                    <span className="font-medium">To:</span>{" "}
-                    <span className="text-muted-foreground">
+                    <span className="font-medium text-white">To:</span>{" "}
+                    <span className="text-gray-400">
                       {formatDate(trip.travelDatesEnd, trip.dateInputType)}
                     </span>
                   </div>
                 )}
                 {trip.duration && (
                   <div>
-                    <span className="font-medium">Duration:</span>{" "}
-                    <span className="text-muted-foreground">
+                    <span className="font-medium text-white">Duration:</span>{" "}
+                    <span className="text-gray-400">
                       {trip.duration} days
                     </span>
                   </div>
@@ -712,24 +755,24 @@ export default function TripDetails() {
           </Card>
 
           {/* Travelers */}
-          <Card>
+          <Card className="glass-card border-purple-500/30">
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg flex items-center">
-                <Users className="h-4 w-4 mr-2 text-primary" />
+              <CardTitle className="text-lg flex items-center text-white">
+                <Users className="h-4 w-4 mr-2 text-purple-400" />
                 Travelers
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
                 <div>
-                  <span className="font-medium">Type:</span>{" "}
-                  <span className="text-muted-foreground">
+                  <span className="font-medium text-white">Type:</span>{" "}
+                  <span className="text-gray-400">
                     {trip.travelingWith}
                   </span>
                 </div>
                 <div>
-                  <span className="font-medium">Group:</span>{" "}
-                  <span className="text-muted-foreground">
+                  <span className="font-medium text-white">Group:</span>{" "}
+                  <span className="text-gray-400">
                     {trip.adults} adult{trip.adults !== 1 ? "s" : ""}
                     {trip.children && trip.children > 0
                       ? `, ${trip.children} child${
@@ -740,8 +783,8 @@ export default function TripDetails() {
                 </div>
                 {trip.ageGroups && trip.ageGroups.length > 0 && (
                   <div>
-                    <span className="font-medium">Ages:</span>{" "}
-                    <span className="text-muted-foreground">
+                    <span className="font-medium text-white">Ages:</span>{" "}
+                    <span className="text-gray-400">
                       {trip.ageGroups.join(", ")}
                     </span>
                   </div>
@@ -751,49 +794,49 @@ export default function TripDetails() {
           </Card>
 
           {/* Accommodation */}
-          <Card>
+          <Card className="glass-card border-purple-500/30">
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg flex items-center">
-                <Home className="h-4 w-4 mr-2 text-primary" />
+              <CardTitle className="text-lg flex items-center text-white">
+                <Home className="h-4 w-4 mr-2 text-purple-400" />
                 Accommodation
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
                 <div>
-                  <span className="font-medium">Type:</span>{" "}
-                  <span className="text-muted-foreground">
+                  <span className="font-medium text-white">Type:</span>{" "}
+                  <span className="text-gray-400">
                     {trip.travelStyle}
                   </span>
                 </div>
                 <div>
-                  <span className="font-medium">Rooms:</span>{" "}
-                  <span className="text-muted-foreground">{trip.rooms}</span>
+                  <span className="font-medium text-white">Rooms:</span>{" "}
+                  <span className="text-gray-400">{trip.rooms}</span>
                 </div>
               </div>
             </CardContent>
           </Card>
 
           {/* Budget */}
-          <Card>
+          <Card className="glass-card border-purple-500/30">
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg flex items-center">
-                <DollarSign className="h-4 w-4 mr-2 text-primary" />
+              <CardTitle className="text-lg flex items-center text-white">
+                <DollarSign className="h-4 w-4 mr-2 text-purple-400" />
                 Budget
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
                 <div>
-                  <span className="font-medium">Amount:</span>{" "}
-                  <span className="text-muted-foreground">
+                  <span className="font-medium text-white">Amount:</span>{" "}
+                  <span className="text-gray-400">
                     {formatCurrency(trip.budget, trip.budgetCurrency)} per
                     person
                   </span>
                 </div>
                 <div>
-                  <span className="font-medium">Flexible:</span>{" "}
-                  <span className="text-muted-foreground">
+                  <span className="font-medium text-white">Flexible:</span>{" "}
+                  <span className="text-gray-400">
                     {trip.budgetFlexible ? "Yes" : "No"}
                   </span>
                 </div>
@@ -802,30 +845,30 @@ export default function TripDetails() {
           </Card>
 
           {/* Trip Style */}
-          <Card>
+          <Card className="glass-card border-purple-500/30">
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg flex items-center">
-                <Heart className="h-4 w-4 mr-2 text-primary" />
+              <CardTitle className="text-lg flex items-center text-white">
+                <Heart className="h-4 w-4 mr-2 text-purple-400" />
                 Trip Style
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
                 <div>
-                  <span className="font-medium">Pace:</span>{" "}
-                  <span className="text-muted-foreground">
+                  <span className="font-medium text-white">Pace:</span>{" "}
+                  <span className="text-gray-400">
                     {getPaceDescription(trip.pace)}
                   </span>
                 </div>
                 {trip.vibes && trip.vibes.length > 0 && (
                   <div>
-                    <span className="font-medium block mb-1">Vibes:</span>
+                    <span className="font-medium block mb-1 text-white">Vibes:</span>
                     <div className="flex flex-wrap gap-1">
                       {trip.vibes.map((vibe) => (
                         <Badge
                           key={vibe}
                           variant="secondary"
-                          className="text-xs"
+                          className="text-xs bg-purple-500/20 text-purple-200 border-purple-500/30"
                         >
                           {vibe}
                         </Badge>
@@ -835,13 +878,13 @@ export default function TripDetails() {
                 )}
                 {trip.priorities && trip.priorities.length > 0 && (
                   <div>
-                    <span className="font-medium block mb-1">Priorities:</span>
+                    <span className="font-medium block mb-1 text-white">Priorities:</span>
                     <div className="flex flex-wrap gap-1">
                       {trip.priorities.map((priority) => (
                         <Badge
                           key={priority}
                           variant="outline"
-                          className="text-xs"
+                          className="text-xs border-purple-500/30 text-purple-200"
                         >
                           {priority}
                         </Badge>
@@ -860,41 +903,41 @@ export default function TripDetails() {
           trip.lovedPlaces ||
           trip.additionalInfo) && (
           <div className="mt-6">
-            <h3 className="text-xl font-semibold mb-3">
+            <h3 className="text-xl font-semibold mb-3 text-white">
               Additional Information
             </h3>
-            <Card>
+            <Card className="glass-card border-purple-500/30">
               <CardContent className="pt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {trip.interests && (
                   <div>
-                    <h4 className="font-medium mb-1">Specific Interests:</h4>
-                    <p className="text-sm text-muted-foreground">
+                    <h4 className="font-medium mb-1 text-white">Specific Interests:</h4>
+                    <p className="text-sm text-gray-400">
                       {trip.interests}
                     </p>
                   </div>
                 )}
                 {trip.beenThereBefore && (
                   <div>
-                    <h4 className="font-medium mb-1">Previous Visits:</h4>
-                    <p className="text-sm text-muted-foreground">
+                    <h4 className="font-medium mb-1 text-white">Previous Visits:</h4>
+                    <p className="text-sm text-gray-400">
                       {trip.beenThereBefore}
                     </p>
                   </div>
                 )}
                 {trip.lovedPlaces && (
                   <div>
-                    <h4 className="font-medium mb-1">Loved Places:</h4>
-                    <p className="text-sm text-muted-foreground">
+                    <h4 className="font-medium mb-1 text-white">Loved Places:</h4>
+                    <p className="text-sm text-gray-400">
                       {trip.lovedPlaces}
                     </p>
                   </div>
                 )}
                 {trip.additionalInfo && (
                   <div className="md:col-span-2">
-                    <h4 className="font-medium mb-1">
+                    <h4 className="font-medium mb-1 text-white">
                       Additional Information:
                     </h4>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-400">
                       {trip.additionalInfo}
                     </p>
                   </div>
@@ -911,14 +954,14 @@ export default function TripDetails() {
       {(trip.status === "pending" ||
         trip.status === "in-progress" ||
         trip.status === "failed") && (
-        <div className="text-center py-10 border rounded-lg">
-          <Info size={48} className="text-muted-foreground mx-auto mb-4" />
-          <h2 className="text-xl font-semibold mb-2">
+        <div className="text-center py-10 glass-card border-purple-500/30 rounded-lg">
+          <Info size={48} className="text-gray-400 mx-auto mb-4" />
+          <h2 className="text-xl font-semibold mb-2 text-white">
             {trip.status === "pending" && "Trip Plan in Progress"}
             {trip.status === "in-progress" && "Trip Plan is Being Generated"}
             {trip.status === "failed" && "Failed to Generate Trip Plan"}
           </h2>
-          <p className="text-muted-foreground">
+          <p className="text-gray-400">
             {trip.status === "pending" &&
               "Your trip itinerary is currently being planned. Please wait as we create your personalized travel plan."}
             {trip.status === "in-progress" &&
@@ -930,15 +973,15 @@ export default function TripDetails() {
           {/* Show current step when available */}
           {(trip.status === "pending" || trip.status === "in-progress") &&
             trip.current_step && (
-              <div className="mt-4 bg-muted/30 p-4 rounded-lg max-w-md mx-auto">
-                <h3 className="font-medium text-sm mb-1">Current Progress:</h3>
-                <p className="text-primary font-medium">{trip.current_step}</p>
+              <div className="mt-4 glass-card p-4 rounded-lg max-w-md mx-auto border-purple-500/30">
+                <h3 className="font-medium text-sm mb-1 text-white">Current Progress:</h3>
+                <p className="text-purple-400 font-medium">{trip.current_step}</p>
               </div>
             )}
 
           {(trip.status === "pending" || trip.status === "in-progress") && (
             <div className="flex justify-center mt-4">
-              <div className="flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full">
+              <div className="flex items-center gap-2 bg-purple-500/20 text-purple-300 px-4 py-2 rounded-full border border-purple-500/30">
                 <Loader2 className="h-4 w-4 animate-spin" />
                 Updating automatically...
               </div>
@@ -951,7 +994,7 @@ export default function TripDetails() {
               <button
                 onClick={retryTripPlan}
                 disabled={retryLoading}
-                className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90 transition-colors"
+                className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-md hover:from-purple-700 hover:to-pink-700 transition-colors shadow-lg"
               >
                 {retryLoading ? (
                   <>
@@ -993,32 +1036,32 @@ export default function TripDetails() {
             onValueChange={setActiveTab}
             className="w-full"
           >
-            <TabsList className="flex w-full justify-start mb-4 gap-2 overflow-x-auto sm:overflow-x-hidden">
-              <TabsTrigger value="itinerary" className="flex items-center">
+            <TabsList className="flex w-full justify-start mb-4 gap-2 overflow-x-auto sm:overflow-x-hidden glass-card border-purple-500/30">
+              <TabsTrigger value="itinerary" className="flex items-center data-[state=active]:bg-purple-500/20 data-[state=active]:text-white">
                 <CalendarDays className="h-4 w-4 sm:mr-2" />
               <span className="hidden sm:inline">Itinerary</span>
             </TabsTrigger>
-            <TabsTrigger value="guide" className="flex items-center">
+            <TabsTrigger value="guide" className="flex items-center data-[state=active]:bg-purple-500/20 data-[state=active]:text-white">
               <Lightbulb className="h-4 w-4 sm:mr-2" />
               <span className="hidden sm:inline">Destination Guide</span>
             </TabsTrigger>
-            <TabsTrigger value="hotels" className="flex items-center">
+            <TabsTrigger value="hotels" className="flex items-center data-[state=active]:bg-purple-500/20 data-[state=active]:text-white">
               <Home className="h-4 w-4 sm:mr-2" />
               <span className="hidden sm:inline">Hotels</span>
             </TabsTrigger>
-            <TabsTrigger value="flights" className="flex items-center">
+            <TabsTrigger value="flights" className="flex items-center data-[state=active]:bg-purple-500/20 data-[state=active]:text-white">
               <Plane className="h-4 w-4 sm:mr-2" />
               <span className="hidden sm:inline">Flights</span>
             </TabsTrigger>
-            <TabsTrigger value="dining" className="flex items-center">
+            <TabsTrigger value="dining" className="flex items-center data-[state=active]:bg-purple-500/20 data-[state=active]:text-white">
               <Utensils className="h-4 w-4 sm:mr-2" />
               <span className="hidden sm:inline">Dining</span>
             </TabsTrigger>
-            <TabsTrigger value="budget" className="flex items-center">
+            <TabsTrigger value="budget" className="flex items-center data-[state=active]:bg-purple-500/20 data-[state=active]:text-white">
               <Receipt className="h-4 w-4 sm:mr-2" />
               <span className="hidden sm:inline">Budget</span>
             </TabsTrigger>
-             <TabsTrigger value="products" className="flex items-center">
+             <TabsTrigger value="products" className="flex items-center data-[state=active]:bg-purple-500/20 data-[state=active]:text-white">
               <span className="hidden sm:inline">Products</span>
             </TabsTrigger>
           </TabsList>
@@ -1037,8 +1080,8 @@ export default function TripDetails() {
                   <div className="space-y-12">
                     {/* Day-by-Day Plan Section */}
                 <section>
-                  <h2 className="text-2xl font-semibold mb-6 flex items-center">
-                    <CalendarDays className="mr-3 h-6 w-6 text-primary" /> Daily
+                  <h2 className="text-2xl font-semibold mb-6 flex items-center text-white">
+                    <CalendarDays className="mr-3 h-6 w-6 text-purple-400" /> Daily
                     Itinerary
                   </h2>
                   <div className="grid grid-cols-1 gap-6">
@@ -1046,7 +1089,7 @@ export default function TripDetails() {
                       trip.itinerary.day_by_day_plan.map((dayPlan) => (
                       <Card
                         key={dayPlan.day}
-                        className="overflow-hidden border-l-4 border-l-primary"
+                        className="overflow-hidden border-l-4 border-l-purple-500 glass-card border-purple-500/30"
                       >
                          {dayPlan.image_url && (
                           <div className="relative h-64 w-full overflow-hidden">
@@ -1067,16 +1110,16 @@ export default function TripDetails() {
                             </div>
                           </div>
                         )}
-                        <CardHeader className="bg-muted/50 pb-3">
+                        <CardHeader className="bg-purple-500/10 pb-3">
                           <div className="flex items-center justify-between">
-                            <CardTitle className="text-xl flex items-center">
-                              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground mr-3">
+                            <CardTitle className="text-xl flex items-center text-white">
+                              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white mr-3">
                                 {dayPlan.day}
                               </span>
                               <span>Day {dayPlan.day}</span>
                             </CardTitle>
                             {dayPlan.date && (
-                              <Badge variant="outline" className="ml-auto">
+                              <Badge variant="outline" className="ml-auto border-purple-500/30 text-purple-200">
                                 <CalendarDays className="mr-1 h-3 w-3" />
                                 {new Date(dayPlan.date).toLocaleDateString(
                                   undefined,
@@ -1091,40 +1134,40 @@ export default function TripDetails() {
                           </div>
                         </CardHeader>
                         <CardContent className="pt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                          <div className="bg-muted/30 p-4 rounded-lg border border-border">
+                          <div className="glass-card p-4 rounded-lg border border-purple-500/30">
                             <div className="flex items-center mb-3">
                               <Sun className="h-5 w-5 mr-2 text-yellow-500" />
-                              <h3 className="font-medium">Morning</h3>
+                              <h3 className="font-medium text-white">Morning</h3>
                             </div>
-                            <p className="text-muted-foreground whitespace-pre-line">
+                            <p className="text-gray-400 whitespace-pre-line">
                               {dayPlan.morning}
                             </p>
                           </div>
-                          <div className="bg-muted/30 p-4 rounded-lg border border-border">
+                          <div className="glass-card p-4 rounded-lg border border-purple-500/30">
                             <div className="flex items-center mb-3">
                               <Sun className="h-5 w-5 mr-2 text-orange-500" />
-                              <h3 className="font-medium">Afternoon</h3>
+                              <h3 className="font-medium text-white">Afternoon</h3>
                             </div>
-                            <p className="text-muted-foreground whitespace-pre-line">
+                            <p className="text-gray-400 whitespace-pre-line">
                               {dayPlan.afternoon}
                             </p>
                           </div>
-                          <div className="bg-muted/30 p-4 rounded-lg border border-border">
+                          <div className="glass-card p-4 rounded-lg border border-purple-500/30">
                             <div className="flex items-center mb-3">
                               <Moon className="h-5 w-5 mr-2 text-indigo-500" />
-                              <h3 className="font-medium">Evening</h3>
+                              <h3 className="font-medium text-white">Evening</h3>
                             </div>
-                            <p className="text-muted-foreground whitespace-pre-line">
+                            <p className="text-gray-400 whitespace-pre-line">
                               {dayPlan.evening}
                             </p>
                           </div>
                         </CardContent>
                         {dayPlan.notes && (
-                          <div className="px-6 py-3 bg-muted/10">
+                          <div className="px-6 py-3 bg-purple-500/10">
                             <div className="flex items-start">
-                              <Paperclip className="h-5 w-5 mr-2 mt-0.5 text-primary flex-shrink-0" />
-                              <p className="text-sm text-muted-foreground">
-                                <span className="font-medium">Note:</span>{" "}
+                              <Paperclip className="h-5 w-5 mr-2 mt-0.5 text-purple-400 flex-shrink-0" />
+                              <p className="text-sm text-gray-400">
+                                <span className="font-medium text-white">Note:</span>{" "}
                                 {dayPlan.notes}
                               </p>
                             </div>
@@ -1133,9 +1176,9 @@ export default function TripDetails() {
                       </Card>
                      ))
                     ) : (
-                      <Card>
+                      <Card className="glass-card border-purple-500/30">
                         <CardContent className="pt-6">
-                          <p className="text-muted-foreground text-center">No daily itinerary available yet.</p>
+                          <p className="text-gray-400 text-center">No daily itinerary available yet.</p>
                         </CardContent>
                       </Card>
                     )}
@@ -1146,8 +1189,8 @@ export default function TripDetails() {
                 {trip.itinerary.attractions &&
                   trip.itinerary.attractions.length > 0 && (
                     <section>
-                      <h2 className="text-2xl font-semibold mb-6 flex items-center">
-                        <Landmark className="mr-3 h-6 w-6 text-primary" />{" "}
+                      <h2 className="text-2xl font-semibold mb-6 flex items-center text-white">
+                        <Landmark className="mr-3 h-6 w-6 text-purple-400" />{" "}
                         Attractions & Activities
                       </h2>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -1168,7 +1211,7 @@ export default function TripDetails() {
                           return (
                           <Card
                             key={index}
-                            className="group hover:shadow-md transition-all duration-300 border-b-4 border-b-transparent hover:border-b-primary overflow-hidden"
+                            className="glass-card border-purple-500/30 group hover:shadow-lg transition-all duration-300 border-b-4 border-b-transparent hover:border-b-purple-500 overflow-hidden"
                           >
                             {imageUrl && (
                               <div className="relative h-48 w-full overflow-hidden">
@@ -1187,13 +1230,13 @@ export default function TripDetails() {
                               </div>
                             )}
                             <CardHeader>
-                              <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                              <CardTitle className="text-lg text-white group-hover:text-purple-300 transition-colors">
                                 {attraction.name}
                               </CardTitle>
                             </CardHeader>
                             {attraction.description && (
                               <CardContent>
-                                <p className="text-sm text-muted-foreground whitespace-pre-line">
+                                <p className="text-sm text-gray-400 whitespace-pre-line">
                                   {attraction.description}
                                 </p>
                               </CardContent>
@@ -1671,8 +1714,9 @@ export default function TripDetails() {
         </motion.div>
       </AnimatePresence>
     </Tabs>
-        </div >
+             </div >
       )}
-    </div >
+      </div> {/* End container */}
+    </div> 
   );
 }
