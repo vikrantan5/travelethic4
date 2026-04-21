@@ -7,8 +7,9 @@ import Footer from "@/components/footer";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/lib/auth-context";
 const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -52,7 +53,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${dmSans.variable} antialiased`}>
+      <body className={`${dmSans.className} antialiased`}>
           <AuthProvider>
           <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
           <Header />
