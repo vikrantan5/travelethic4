@@ -130,14 +130,14 @@ export default function AuthForm() {
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger
                   value="signin"
-                  className="data-[state=active]:text-white text-gray-800"
+                  className="data-[state=active]:text-white text-gray-500"
                   data-testid="auth-tab-signin"
                 >
                   Sign In
                 </TabsTrigger>
                 <TabsTrigger
                   value="signup"
-                  className="data-[state=active]:text-white text-gray-800"
+                  className="data-[state=active]:text-white text-gray-500"
                   data-testid="auth-tab-signup"
                 >
                   Sign Up
